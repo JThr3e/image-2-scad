@@ -167,7 +167,7 @@ async def _image_to_scad(e):
     tag = document.createElement('a')
     blob = Blob.new([scad_txt], {type: "text/plain"})
     tag.href = window.URL.createObjectURL(blob)
-    tag.download = 'test.scad'
+    tag.download = 'output.scad'
     tag.click()
 
     
@@ -177,7 +177,7 @@ async def _image_to_scad(e):
     pil_image.save(my_stream, format="png")
 
     #Create a JS File object with our data and the proper mime type
-    image_file = File.new([Uint8Array.new(my_stream.getvalue())], "./test1.jpg", {type: "image/png"})
+    image_file = File.new([Uint8Array.new(my_stream.getvalue())], "./test.jpg", {type: "image/png"})
     
     new_image = document.createElement('img')
     new_image.src = window.URL.createObjectURL(image_file)
