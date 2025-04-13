@@ -3,5 +3,5 @@ import sys
 import time
 display(sys.version)
 for i in range(0,10):
-  display(i)
+  print(i)
   time.sleep(1)
