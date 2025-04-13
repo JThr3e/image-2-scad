@@ -76,10 +76,8 @@ async def _image_to_scad(e):
     #Get the data from the files arrayBuffer as an array of unsigned bytes
     array_buf = Uint8Array.new(await first_item.arrayBuffer())
 
-    #BytesIO wants a bytes-like object, so convert to bytearray first
     bytes_list = bytearray(array_buf)
-    byte_array = io.BytesIO(bytes_list) 
-    rgb_img = np.frombuffer(byte_array, dtype=np.uint8)
+    rgb_img = np.frombuffer(bytes_list, dtype=np.uint8)
 
     rgb_img = resize_image(rgb_img, 300)
     gray_img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2GRAY)
