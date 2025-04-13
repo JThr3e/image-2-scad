@@ -37,8 +37,8 @@ async def _upload_change_and_show(e):
     #Create new tag and insert into page
     new_image = document.createElement('img')
     new_image.src = window.URL.createObjectURL(image_file)
-    document.getElementById("output_upload_pillow").appendChild(new_image)
+    document.getElementById("output_upload").appendChild(new_image)
 
 # Run image processing code above whenever file is uploaded    
 upload_file = create_proxy(_upload_change_and_show)
-document.getElementById("file-upload-pillow").addEventListener("change", upload_file)
+document.getElementById("file-upload").addEventListener("change", upload_file)
