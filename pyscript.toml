@@ -1,4 +1,4 @@
-packages = [ "opencv-python", "numpy", "pillow"]
+packages = [ "opencv-python", "numpy", "pillow", "euclid3", "solidpython2"]
 name = "Testing Stuff"
 [[fetch]]
 files = []
