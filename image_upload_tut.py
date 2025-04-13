@@ -99,7 +99,17 @@ async def _image_to_scad(e):
     black_padding = np.zeros((50, width))
     gray_img = np.row_stack((black_padding, gray_img))
 
-    pil_image = Image.fromarray(gray_img).convert('RGB')
+    gray_img_copy = np.uint8(gray_img)
+
+    edges = cv2.Canny(gray_img_copy, 100, 200)
+
+    result = np.zeros_like(edges)
+    contours, _ = cv2.findContours(gray_img_copy, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    for cntr in contours:
+        cv2.drawContours(result, [cntr], 0, 255, 1)
+    
+
+    pil_image = Image.fromarray(result).convert('RGB')
     #Convert Pillow object array back into File type that createObjectURL will take
     my_stream = io.BytesIO()
     pil_image.save(my_stream, format="png")
