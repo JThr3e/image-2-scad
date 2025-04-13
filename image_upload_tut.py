@@ -2,6 +2,12 @@ from js import document, console, Uint8Array, window, File
 from pyodide.ffi import create_proxy
 import asyncio
 import io
+import cv2
+import numpy as np
+
+from solid2 import translate, resize, polygon, scad_render
+from solid2.splines import catmull_rom_polygon, bezier_polygon
+import sys
 
 from PIL import Image, ImageFilter
 
@@ -25,7 +31,7 @@ async def _upload_change_and_show(e):
 
     # Now that we have the image loaded with PIL, we can use all the tools it makes available. 
     # "Emboss" the image, rotate 45 degrees, fill with dark green
-    my_image = my_image.filter(ImageFilter.EMBOSS).rotate(45, expand=True, fillcolor=(0,100,50)).resize((300,300))
+    my_image = my_image.filter(ImageFilter.EMBOSS).resize((300,300))
 
     #Convert Pillow object array back into File type that createObjectURL will take
     my_stream = io.BytesIO()
