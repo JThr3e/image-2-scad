@@ -107,13 +107,13 @@ async def _image_to_scad(e):
 
     white_padding = np.zeros((50, width, 3))
     white_padding[:, :] = [255, 255, 255]
-    rgb_img = np.row_stack((white_padding, rgb_img))
+    rgb_img = np.vstack((white_padding, rgb_img))
 
     gray_img = 255 - gray_img
     gray_img[gray_img > 100] = 255
     gray_img[gray_img <= 100] = 0
     black_padding = np.zeros((50, width))
-    gray_img = np.row_stack((black_padding, gray_img))
+    gray_img = np.vstack((black_padding, gray_img))
 
     gray_img_copy = np.uint8(gray_img)
 
