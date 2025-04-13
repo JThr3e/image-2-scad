@@ -5,8 +5,8 @@ import io
 import cv2
 import numpy as np
 
-from solid2 import translate, resize, polygon, scad_render
-from solid2.splines import catmull_rom_polygon, bezier_polygon
+from solid import translate, resize, polygon, scad_render
+from solid.splines import catmull_rom_polygon, bezier_polygon
 import sys
 
 from PIL import Image, ImageFilter
