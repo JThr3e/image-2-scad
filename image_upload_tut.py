@@ -45,6 +45,64 @@ async def _upload_change_and_show(e):
     new_image.src = window.URL.createObjectURL(image_file)
     document.getElementById("output_upload").appendChild(new_image)
 
+def resize_image(image, max_size):
+    """
+    Resize an image while keeping its aspect ratio.
+
+    Args:
+        image (numpy array): The input image.
+        max_size (int): The maximum size of the resized image.
+
+    Returns:
+        numpy array: The resized image.
+    """
+    h, w = image.shape[:2]
+    aspect_ratio = w / h
+
+    if w > h:
+        new_w = max_size
+        new_h = int(max_size / aspect_ratio)
+    else:
+        new_h = max_size
+        new_w = int(max_size * aspect_ratio)
+
+    resized_image = cv2.resize(image, (new_w, new_h))
+    return resized_image
+
+async def _image_to_scad(e):
+    console.log("Attempted file upload: " + e.target.value)
+    file_list = e.target.files
+    first_item = file_list.item(0)
+    #Get the data from the files arrayBuffer as an array of unsigned bytes
+    array_buf = Uint8Array.new(await first_item.arrayBuffer())
+
+    #BytesIO wants a bytes-like object, so convert to bytearray first
+    bytes_list = bytearray(array_buf)
+    rgb_img = io.BytesIO(bytes_list) 
+
+    rgb_img = resize_image(rgb_img, 300)
+    gray_img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2GRAY)
+    height, width = gray_img.shape
+
+    white_padding = np.zeros((50, width, 3))
+    white_padding[:, :] = [255, 255, 255]
+    rgb_img = np.row_stack((white_padding, rgb_img))
+
+    gray_img = 255 - gray_img
+    gray_img[gray_img > 100] = 255
+    gray_img[gray_img <= 100] = 0
+    black_padding = np.zeros((50, width))
+    gray_img = np.row_stack((black_padding, gray_img))
+
+    cv2.imwrite('./test1.jpg', gray_img)
+
+    #Create a JS File object with our data and the proper mime type
+    image_file = File.new([Uint8Array.new(my_stream.getvalue())], "./test1.jpg", {type: "image/png"})
+    
+    new_image = document.createElement('img')
+    new_image.src = window.URL.createObjectURL(image_file)
+    document.getElementById("output_upload").appendChild(new_image)
+
 # Run image processing code above whenever file is uploaded    
-upload_file = create_proxy(_upload_change_and_show)
+upload_file = create_proxy(_image_to_scad)
 document.getElementById("file-upload").addEventListener("change", upload_file)
