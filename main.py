@@ -1,4 +1,5 @@
 from js import document, console, window
+# HELLO?
 from pyodide.ffi import create_proxy
 import asyncio
 
