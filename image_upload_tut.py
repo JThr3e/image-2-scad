@@ -69,13 +69,13 @@ def resize_image(image, max_size):
     resized_image = cv2.resize(image, (new_w, new_h))
     return resized_image
 
-async def save_file(content, filename):
+def save_file(content, filename):
     """
     Saves the given content as a file to the user's system using the File System Access API.
     """
     blob = Blob.new([content], {type: "text/plain"})
 
-    handle = await window.showSaveFilePicker({
+    handle = window.showSaveFilePicker({
         suggestedName: filename,
         types: [{
             description: "Text files",
@@ -83,9 +83,9 @@ async def save_file(content, filename):
         }]
     })
 
-    writable = await handle.createWritable()
-    await writable.write(blob)
-    await writable.close()
+    writable = handle.createWritable()
+    writable.write(blob)
+    writable.close()
 
             
 async def _image_to_scad(e):
