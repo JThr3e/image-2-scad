@@ -69,6 +69,25 @@ def resize_image(image, max_size):
     resized_image = cv2.resize(image, (new_w, new_h))
     return resized_image
 
+async def save_file(content, filename):
+    """
+    Saves the given content as a file to the user's system using the File System Access API.
+    """
+    blob = Blob.new([content], {type: "text/plain"})
+
+    handle = await window.showSaveFilePicker({
+        suggestedName: filename,
+        types: [{
+            description: "Text files",
+            accept: {"text/plain": [".txt"]}
+        }]
+    })
+
+    writable = await handle.createWritable()
+    await writable.write(blob)
+    await writable.close()
+
+            
 async def _image_to_scad(e):
     console.log("Attempted file upload: " + e.target.value)
     file_list = e.target.files
@@ -129,6 +148,7 @@ async def _image_to_scad(e):
     shape = polygon(path_nn)
     resize_shape = resize([25, 0], auto=True)(shape)
     scad_txt = scad_render(resize_shape)
+    save_file(scad_txt, "test.scad")
     
     pil_image = Image.fromarray(result).convert('RGB')
     #Convert Pillow object array back into File type that createObjectURL will take
