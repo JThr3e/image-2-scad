@@ -107,8 +107,29 @@ async def _image_to_scad(e):
     contours, _ = cv2.findContours(gray_img_copy, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for cntr in contours:
         cv2.drawContours(result, [cntr], 0, 255, 1)
-    
 
+    def nearest_neighbor_path(points):
+        path = [points[0]]
+        remaining_points = points[1:]
+        while remaining_points:
+            last_point = path[-1]
+            distances = [np.sqrt((p[0] - last_point[0])**2 + (p[1] - last_point[1])**2) for p in remaining_points]
+            closest_index = np.argmin(distances)
+            path.append(remaining_points.pop(closest_index))
+        return path
+
+    points = []
+    for x,lst in enumerate(result):
+        for y,elem in enumerate(lst):
+            if elem == 255:
+                points.append((x,y))
+
+    path_nn = nearest_neighbor_path(points)
+    
+    shape = polygon(path_nn)
+    resize_shape = resize([25, 0], auto=True)(shape)
+    scad_txt = scad_render(resize_shape)
+    
     pil_image = Image.fromarray(result).convert('RGB')
     #Convert Pillow object array back into File type that createObjectURL will take
     my_stream = io.BytesIO()
