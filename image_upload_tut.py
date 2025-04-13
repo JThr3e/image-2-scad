@@ -164,13 +164,7 @@ async def _image_to_scad(e):
     resize_shape = resize([25, 0], auto=True)(shape)
     scad_txt = scad_render(resize_shape)
 
-    tag = document.createElement('a')
-    blob = Blob.new([scad_txt], {type: "text/plain"})
-    tag.href = window.URL.createObjectURL(blob)
-    tag.download = 'output.scad'
-    tag.click()
-
-    
+        
     pil_image = Image.fromarray(result).convert('RGB')
     #Convert Pillow object array back into File type that createObjectURL will take
     my_stream = io.BytesIO()
@@ -182,6 +176,14 @@ async def _image_to_scad(e):
     new_image = document.createElement('img')
     new_image.src = window.URL.createObjectURL(image_file)
     document.getElementById("output_upload").appendChild(new_image)
+    
+    tag = document.createElement('a')
+    blob = Blob.new([scad_txt], {type: "text/plain"})
+    tag.href = window.URL.createObjectURL(blob)
+    tag.download = 'output.scad'
+    tag.click()
+
+
 
 # Run image processing code above whenever file is uploaded    
 upload_file = create_proxy(_image_to_scad)
