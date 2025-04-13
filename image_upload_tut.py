@@ -166,7 +166,7 @@ async def _image_to_scad(e):
 
     tag = document.createElement('a')
     blob = Blob.new([scad_txt], {type: "text/plain"})
-    tag.href = URL.createObjectURL(blob)
+    tag.href = window.URL.createObjectURL(blob)
     tag.download = 'test.scad'
     tag.click()
 
