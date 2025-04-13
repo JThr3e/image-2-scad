@@ -99,7 +99,10 @@ async def _image_to_scad(e):
     black_padding = np.zeros((50, width))
     gray_img = np.row_stack((black_padding, gray_img))
 
-    cv2.imwrite('./test1.jpg', gray_img)
+    pil_image = Image.fromarray(gray_img)
+    #Convert Pillow object array back into File type that createObjectURL will take
+    my_stream = io.BytesIO()
+    pil_image.save(my_stream, format="jpg")
 
     #Create a JS File object with our data and the proper mime type
     image_file = File.new([Uint8Array.new(my_stream.getvalue())], "./test1.jpg", {type: "image/png"})
