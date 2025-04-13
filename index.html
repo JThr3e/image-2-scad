@@ -8,10 +8,11 @@
         <script type="module" src="https://pyscript.net/releases/2025.3.1/core.js"></script>
     </head>
     <body>
-        <h3>This utility will take an image, try to find the boundaries, and create an openscad polygon which will be downloaded as output.scad. The boundaries that are detected will be displayed below.</h3>
+	<h1>Image2Scad</h1>
+        <h3>This utility will take an image, try to find the boundaries, and create an openscad polygon which will be downloaded as "output.scad". The .scad file can then be converted to dxf or stl using online tools. The boundaries that are detected will be displayed below.</h3>
         <py-config src="./pyscript.toml"></py-config>
         <label for="Upload an image"></label><input type="file" id="file-upload">
         <div id="output_upload"></div>
-        <script type="py" src="image_upload_tut.py"></script>
+        <script type="py" src="image-2-scad.py"></script>
     </body>
 </html>
