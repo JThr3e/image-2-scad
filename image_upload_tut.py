@@ -1,4 +1,4 @@
-from js import document, console, Uint8Array, window, File
+from js import document, console, Uint8Array, window, File, Blob
 from pyodide.ffi import create_proxy
 import asyncio
 import io
