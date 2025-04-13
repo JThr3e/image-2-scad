@@ -99,7 +99,7 @@ async def _image_to_scad(e):
     black_padding = np.zeros((50, width))
     gray_img = np.row_stack((black_padding, gray_img))
 
-    pil_image = Image.fromarray(gray_img)
+    pil_image = Image.fromarray(gray_img).convert('RGB')
     #Convert Pillow object array back into File type that createObjectURL will take
     my_stream = io.BytesIO()
     pil_image.save(my_stream, format="png")
