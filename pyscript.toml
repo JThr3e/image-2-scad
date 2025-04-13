@@ -1,0 +1,4 @@
+packages = [ "opencv-python", "numpy", "pillow"]
+name = "Testing Stuff"
+[[fetch]]
+files = []
