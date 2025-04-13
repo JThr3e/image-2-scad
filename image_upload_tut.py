@@ -76,10 +76,9 @@ def save_file(content, filename):
     blob = Blob.new([content], {type: "text/plain"})
 
     handle = window.showSaveFilePicker({
-        suggestedName: filename,
         types: [{
             description: "Text files",
-            accept: {"text/plain": [".txt"]}
+            accept: {"text/plain": [".scad"]}
         }]
     })
 
