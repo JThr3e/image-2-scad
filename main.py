@@ -1,5 +1,5 @@
 from js import document, console, window
-from pyodide import create_proxy
+from pyodide.ffi import create_proxy
 import asyncio
 
 def _upload_file_and_show(e):
