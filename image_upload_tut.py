@@ -145,7 +145,9 @@ async def _image_to_scad(e):
     shape = polygon(path_nn)
     resize_shape = resize([25, 0], auto=True)(shape)
     scad_txt = scad_render(resize_shape)
-    save_file(scad_txt, "test.scad")
+
+    with open("test.scad", "w") as f:
+        f.write(scad_txt)
     
     pil_image = Image.fromarray(result).convert('RGB')
     #Convert Pillow object array back into File type that createObjectURL will take
