@@ -102,7 +102,7 @@ async def _image_to_scad(e):
     pil_image = Image.fromarray(gray_img)
     #Convert Pillow object array back into File type that createObjectURL will take
     my_stream = io.BytesIO()
-    pil_image.save(my_stream, format="jpg")
+    pil_image.save(my_stream, format="png")
 
     #Create a JS File object with our data and the proper mime type
     image_file = File.new([Uint8Array.new(my_stream.getvalue())], "./test1.jpg", {type: "image/png"})
