@@ -1,5 +1,5 @@
 from js import document, console, Uint8Array, window, File
-from pyodide import create_proxy
+from pyodide.ffi import create_proxy
 import asyncio
 import io
 
