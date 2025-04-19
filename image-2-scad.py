@@ -130,8 +130,8 @@ async def _image_to_scad(e):
     gray_img = 255 - gray_img
     gray_img[gray_img > 100] = 255
     gray_img[gray_img <= 100] = 0
-    black_padding = np.zeros((50, width))
-    gray_img = np.vstack((black_padding, gray_img))
+    #black_padding = np.zeros((50, width))
+    #gray_img = np.vstack((black_padding, gray_img))
 
     gray_img_copy = np.uint8(gray_img)
 
